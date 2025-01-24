@@ -38,13 +38,15 @@ def parse_args(args=None):
 
 def main():
     """Parse arguments and train model on dataset."""
-    #args = parse_args()
+    args = parse_args()
+    '''
     args = parse_args(['--lr', '0.001',
                        '--batch_size', '32',
                        '--epochs', '5',
                        '--model', 'SimpleNet',
                        '--optimizer', 'Adam',
                        '--dataset', 'fakes_dataset'])
+    '''
     # Data
     print(f'==> Preparing data: {args.dataset.replace("_", " ")}..')
 
@@ -106,3 +108,6 @@ def main():
 
 if __name__ == '__main__':
     main()
+
+# python train_main.py -d fakes_dataset -m SimpleNet --lr 0.001 -b 32 -e 5 -o Adam
+# python train_main.py -d synthetic_dataset -m SimpleNet --lr 0.001 -b 32 -e 5 -o Adam

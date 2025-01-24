@@ -1,9 +1,16 @@
 name: ex4
 channels:
+  - conda-forge
   - pytorch
   - defaults
-  - conda-forge
 dependencies:
+  - python=3.9
+  - pytorch=1.9.0
+  - scipy>=1.7.1
+  - scikit-learn>=1.0.1
+  - pillow=8.3.1
+  - zstd=1.4.9
+  - numpy=1.21.2
   - _libgcc_mutex=0.1=main
   - _openmp_mutex=4.5=1_gnu
   - blas=1.0=mkl
@@ -88,4 +95,5 @@ dependencies:
     - python-dateutil==2.8.2
     - traitlets==5.0.5
     - wcwidth==0.2.5
+  
 prefix: /home/uriel/anaconda3/envs/ex4

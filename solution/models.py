@@ -33,7 +33,7 @@ class SimpleNet(nn.Module):
 
 
 def get_xception_based_model() -> nn.Module:
-    """Return an Xception-Based network.
+    """Return a Xception-Based network.
 
     (1) Build an Xception pre-trained backbone and hold it as `custom_network`.
     (2) Override `custom_network`'s fc attribute with the binary

@@ -58,7 +58,27 @@ def get_soft_scores_and_true_labels(dataset, model):
         gt_labels: an iterable holding the samples' ground truth labels.
     """
     """INSERT YOUR CODE HERE, overrun return."""
-    return torch.rand(100, ), torch.rand(100, ), torch.randint(0, 2, (100, ))
+    # Initialize lists to hold results
+    all_first_soft_scores = []
+    all_second_soft_scores = []
+    gt_labels = []
+
+    batch_size = 32
+    dataloader = DataLoader(dataset, batch_size, shuffle=True)
+    with torch.no_grad():
+        for batch_idx, (inputs, labels) in enumerate(dataloader):
+            outputs = model(inputs)  # Shape: [batch_size, num_classes]
+
+            # Extract the soft scores (logits for each class)
+            first_soft_scores = outputs[:, 0].numpy()  # Real class score
+            second_soft_scores = outputs[:, 1].numpy()  # Fake class score
+
+            # Store the results
+            all_first_soft_scores.extend(first_soft_scores)
+            all_second_soft_scores.extend(second_soft_scores)
+            gt_labels.extend(labels.numpy())  # Convert labels to numpy for easy handling
+
+    return all_first_soft_scores, all_second_soft_scores, gt_labels
 
 
 def plot_roc_curve(roc_curve_figure,
@@ -142,7 +162,14 @@ def main():
     # load model
     model_name = args.model
     model = load_model(model_name)
+    ''' 
+    NOTE: changed due to torch version conflict
+    checkpoint = torch.load(args.checkpoint_path)
     model.load_state_dict(torch.load(args.checkpoint_path)['model'])
+    '''
+    checkpoint = torch.load(args.checkpoint_path, weights_only=True)
+    model.load_state_dict(checkpoint['model'])
+
     model.eval()
 
     # load dataset
@@ -173,3 +200,6 @@ def main():
 
 if __name__ == '__main__':
     main()
+
+# NOTE : the script configured for debug, edit before running/debuging again with different parameters
+# python numerical_analysis.py -m SimpleNet -cpp checkpoints/fakes_dataset_SimpleNet_Adam.pt -d fakes_dataset

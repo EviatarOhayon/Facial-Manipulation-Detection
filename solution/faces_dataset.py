@@ -47,10 +47,8 @@ class FacesDataset(Dataset):
 
         return image, label
 
-       
 
     def __len__(self):
         """Return the number of images in the dataset."""
-        #print('real_image length = ' , len(self.real_image_names))
-        #print('fake_image length = ', len(self.fake_image_names))
-        return  len(self.fake_image_names) + len(self.real_image_names)
+        return len(self.fake_image_names) + len(self.real_image_names)
+
